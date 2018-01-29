@@ -1,9 +1,8 @@
 class PetsSeekingPeople::Scraper
 
-  def self.scrape_index_page
+  def self.scrape_index_page #(index_url)
   	#practice w/dog and cat html files and remove those before publishing
   	doc = Nokogiri::HTML(File.read("./assets/cats.html"))
-    binding.pry
   animals = [] # returns an array of hashes
   #access container
   #within each container obtain info on animal
@@ -18,7 +17,18 @@ class PetsSeekingPeople::Scraper
 
   end
 
-  def self.scrape_animal_page(animal_url)
+  def self.scrape_animal_page #(animal_url)
+  	doc = Nokogiri::HTML(File.read("./assets/cat_instance.html"))
+  	binding.pry
+
+  	#doc.xpath("//*[@id='rgtkPetInfoIndented_0']/li").text => more about animal, but not formatted well
+  	#doc.xpath("//*[@id='rgtkPetFieldOrgName_0']").text => org name
+  	#doc.xpath("//*[@id='rgtkPetFieldOrgAddress_0']").text => org address 1
+  	#doc.xpath("//*[@id='rgtkPetFieldOrgCitystatezip_0']").text => org address 2
+  	#doc.xpath("//*[@id='rgtkPetFieldOrgPhone_0']").text => org phone
+  	#doc.xpath("//*[@id='rgtkPetFieldOrgUrl_0']/a").text => org website
+  	#doc.xpath("//*[@id='rgtkPetFieldDescription_0']/div[1]/p").text => more about animal, but not formatted well
+
 
   animal = {}
 
