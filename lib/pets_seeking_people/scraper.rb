@@ -1,8 +1,8 @@
 class PetsSeekingPeople::Scraper
 
-  def self.scrape_index_page(index_url)
-  	doc = Nokogiri::HTML(open(index_url))
-
+  def self.scrape_index_page
+  	doc = Nokogiri::HTML(open("https://www.aspca.org/adopt-pet/adoptable-cats-your-local-shelter#petfocus_0=&page_0=1&breed_0=&sex_0=&distance_0=25&location_0=60618&action_0=search"))
+    binding.pry
   animals = []
 
 
