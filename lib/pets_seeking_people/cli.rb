@@ -1,5 +1,7 @@
 class PetsSeekingPeople::CLI
 
+	@@pets = []
+
   def call
   	puts "Welcome! If you're looking for a dog, type 'dog'. If you're looking for a cat, type 'cat'."
   	pet_input = gets.strip.downcase
@@ -11,25 +13,30 @@ class PetsSeekingPeople::CLI
 	end
 
 	def list_pets(pet_input, zip_input)
-		#runs scraper
+		#runs scraper, pushes into @pets
   	puts "These pets are available for adoption in your area"
   	puts <<~HEREDOC
   		1. Charlie
   		2. Rex
   		3. Earl
   	HEREDOC
-
+  	@@pets << ["Charlie", "Rex", "Earl"]
 	end
 
 	def menu
 		input = nil
 		while input != 'exit'
-			puts "Enter the number of the pet you'd like more info on or type 'exit' to exit:"
+			puts "Enter the number of the pet you'd like more info."
+			puts "Or type 'list' to see the list of available pets again."
+			puts "Or type 'exit' to exit."
 			input = gets.strip.downcase
 			case input
-		  when "1"
-		  	"Here's their info..."
-		#display info on selected animal based on number
+		  	when "1"
+		  		"Here's their info..."
+					#display info on selected animal based on number
+				when "list"
+					@@pets
+					#display list of animals
 			end
 		end
 	end
