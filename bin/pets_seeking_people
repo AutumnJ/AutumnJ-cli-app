@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+PetsSeekingPeople::CLI.new.call
