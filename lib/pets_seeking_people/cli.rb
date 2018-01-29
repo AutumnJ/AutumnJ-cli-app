@@ -13,7 +13,8 @@ class PetsSeekingPeople::CLI
 	end
 
 	def list_pets(pet_input, zip_input)
-		#runs scraper, pushes into @pets
+		#runs scraper w/ different URL depending on pet_input
+		# pet_input == "cat" ? url = CATURL : url = DOGURL
   	puts "These pets are available for adoption in your area"
   	@pets = PetsSeekingPeople::Pets.available
   	@pets.each.with_index(1) { |pet, i| puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age}"}

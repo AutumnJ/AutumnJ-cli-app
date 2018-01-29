@@ -1,0 +1,3 @@
+class PetsSeekingPeople::Scraper
+
+end
