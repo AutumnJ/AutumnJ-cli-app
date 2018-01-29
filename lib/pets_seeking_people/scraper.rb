@@ -1,6 +1,7 @@
 class PetsSeekingPeople::Scraper
 
   def self.scrape_index_page(index_url)
+  	#practice w/dog and cat html files and remove those before publishing
   	doc = Nokogiri::HTML(open(index_url))
     binding.pry
   animals = []
