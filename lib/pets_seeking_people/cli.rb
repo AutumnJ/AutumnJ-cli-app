@@ -1,6 +1,6 @@
 class PetsSeekingPeople::CLI
 
-	@@pets = []
+	#@@pets = []
 
   def call
   	puts "Welcome! If you're looking for a dog, type 'dog'. If you're looking for a cat, type 'cat'."
@@ -15,12 +15,7 @@ class PetsSeekingPeople::CLI
 	def list_pets(pet_input, zip_input)
 		#runs scraper, pushes into @pets
   	puts "These pets are available for adoption in your area"
-  	puts <<~HEREDOC
-  		1. Charlie
-  		2. Rex
-  		3. Earl
-  	HEREDOC
-  	@@pets << ["Charlie", "Rex", "Earl"]
+  	@pets = PetsSeekingPeople::Pets.available
 	end
 
 	def menu
@@ -35,7 +30,7 @@ class PetsSeekingPeople::CLI
 		  		"Here's their info..."
 					#display info on selected animal based on number
 				when "list"
-					@@pets
+					#@@pets
 					#display list of animals
 			end
 		end
