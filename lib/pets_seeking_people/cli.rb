@@ -1,26 +1,42 @@
 class PetsSeekingPeople::CLI
 
+	attr_accessor :pet_input, :zip_input
+
 	#@@pets = []
 
   def call
-  	puts "Welcome! If you're looking for a dog, type 'dog'. If you're looking for a cat, type 'cat'."
-    pet_input = gets.strip.downcase
-	    if !valid_pet_input?(pet_input)
-	  		self.call
-	  	end
-
-		puts "What is your zip code?"
-		zip_input = gets.strip
-		  if !/\A\d+\z/.match(zip_input) || zip_input.size > 5
-		   call
-		  end
+  	puts "Welcome to pets seeking people!"
+  	pet_type
+  	zip
 		list_pets(pet_input, zip_input)
 		menu
 		farewell
 	end
 
+	def pet_type
+		puts "If you're looking for a dog, type 'dog'. If you're looking for a cat, type 'cat'."
+    @pet_input = gets.strip.downcase
+	    if !valid_pet_input?(pet_input)
+	    	puts "While that's a lovely animal (or a typo), it's not an option."
+	  		self.pet_type
+	  	end
+	end
+
+	def zip
+		puts "What is your zip code?"
+		@zip_input = gets.strip
+		  if !valid_zip_code?(zip_input)
+		  	puts "Oops, not a valid zip!"
+		    self.zip
+		  end
+	end
+
 	def valid_pet_input?(pet_input)
 		pet_input == "cat" || pet_input == "dog"
+	end
+
+	def valid_zip_code?(zip_input)
+    /\A\d+\z/.match(zip_input) && zip_input.size == 5
 	end
 
 	def list_pets(pet_input, zip_input)
