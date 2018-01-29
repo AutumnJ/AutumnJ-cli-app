@@ -3,6 +3,7 @@ class PetsSeekingPeople::Scraper
   def self.scrape_index_page #(index_url)
   	#practice w/dog and cat html files and remove those before publishing
   	doc = Nokogiri::HTML(File.read("./assets/cats.html"))
+  	binding.pry
     animals = [] # returns an array of hashes
   	#data on webpage is contained in table, so used xpath to access
     animal_number = 1
@@ -14,7 +15,6 @@ class PetsSeekingPeople::Scraper
     		:gender => doc.xpath("//*[@id='rgtkSearchPetBasicInfo_#{animal_number}_0']").text.split(" ")[1]
     		#:animal_url	=> 
     	}
-    	binding.pry
     	animal_number += 1
     end
   	animals 
@@ -41,10 +41,12 @@ end
 #doc.xpath("//*[@id='rgtkSearchResultsTable_0']/tbody/tr[3]/td[1]") => animal 1 in row 2
 #three columns across; placeholder row in between each row
 #doc.xpath("//*[@id='rgtkSearchPetName_1_0']/a") => NEED INFO FROM ONCLICK
+#doc.xpath("//*[@id='rgtkSearchPetName_10_0']/a/@onclick") = gets onclick
 #doc.xpath("//*[@id='rgtkSearchPetName_1_0']/a").text => animal name
 #doc.xpath("//*[@id='rgtkSearchPetBreed_1_0']").text => animal breed
 #doc.xpath("//*[@id='rgtkSearchPetBasicInfo_1_0']").text => animal age & gender
 #doc.xpath("//*[@id='rgtkSearchPetBasicInfo_1_0']").text.split(" ")[0] => animal age
 #doc.xpath("//*[@id='rgtkSearchPetBasicInfo_1_0']").text.split(" ")[1] => animal gender
 
+#doc.xpath("//*[@id='rgtkSearchPetName_10_0']/a").value
 
