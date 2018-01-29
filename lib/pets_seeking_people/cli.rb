@@ -25,6 +25,8 @@ class PetsSeekingPeople::CLI
 			puts "Or type 'list' to see the list of available pets again."
 			puts "Or type 'exit' to exit."
 			input = gets.strip.downcase
+			if input.to_i > 0 #strings converted to i convert to 0
+
 			case input
 		  	when "1"
 		  		"Here's their info..."

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby 
 
-require './lib/pets_seeking_people'
+require "bundler/setup"
+require "pets_seeking_people"
 
 PetsSeekingPeople::CLI.new.call
