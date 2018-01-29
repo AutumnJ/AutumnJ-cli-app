@@ -16,6 +16,7 @@ class PetsSeekingPeople::CLI
 		#runs scraper, pushes into @pets
   	puts "These pets are available for adoption in your area"
   	@pets = PetsSeekingPeople::Pets.available
+  	@pets.each.with_index(1) { |pet, i| puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age}"}
 	end
 
 	def menu
@@ -25,13 +26,15 @@ class PetsSeekingPeople::CLI
 			puts "Or type 'list' to see the list of available pets again."
 			puts "Or type 'exit' to exit."
 			input = gets.strip.downcase
+
 			if input.to_i > 0 #strings converted to i convert to 0
 				puts @pets[input.to_i-1]
 			elsif input == "list"
-				@pets
+				@pets.each.with_index(1) { |pet, i| puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age}"}
 			else
 				puts "Not sure what you want? Type 'list' to see available animals and then adopt them all!"
 			end
+
 		end
 	end
 
