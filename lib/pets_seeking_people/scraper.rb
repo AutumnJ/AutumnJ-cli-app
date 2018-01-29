@@ -1,11 +1,20 @@
 class PetsSeekingPeople::Scraper
 
-  def self.scrape_index_page(index_url)
+  def self.scrape_index_page
   	#practice w/dog and cat html files and remove those before publishing
-  	doc = Nokogiri::HTML(open(index_url))
+  	doc = Nokogiri::HTML(File.read("./assets/cats.html"))
     binding.pry
-  animals = []
-
+  animals = [] # returns an array of hashes
+  #access container
+  #within each container obtain info on animal
+  # animals << {
+  	# :name =>
+  	# :breed =>
+  	# :age =>
+  	# :gender =>
+  	# :details_url => can I determine this easily? URL - insert animal ID
+	#}
+	#return animals
 
   end
 
@@ -17,6 +26,10 @@ class PetsSeekingPeople::Scraper
 
 end 
 
+
+#//*[@id="rgtkSearchPetName_1_0"]
+
+#//*[@id="rgtkSearchContainer_0"]
 
 
 	#   pet_1 = self.new
