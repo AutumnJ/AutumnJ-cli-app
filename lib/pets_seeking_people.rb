@@ -1,5 +1,2 @@
-require "pets_seeking_people/version"
-
-module PetsSeekingPeople
-  # Your code goes here...
-end
+require_relative "./pets_seeking_people/version"
+require_relative "./pets_seeking_people/cli"

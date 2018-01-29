@@ -1,3 +1,5 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby 
+
+require './lib/pets_seeking_people'
 
 PetsSeekingPeople::CLI.new.call
