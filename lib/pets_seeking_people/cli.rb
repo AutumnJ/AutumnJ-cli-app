@@ -4,12 +4,23 @@ class PetsSeekingPeople::CLI
 
   def call
   	puts "Welcome! If you're looking for a dog, type 'dog'. If you're looking for a cat, type 'cat'."
-  	pet_input = gets.strip.downcase
+    pet_input = gets.strip.downcase
+	    if !valid_pet_input?(pet_input)
+	  		self.call
+	  	end
+
 		puts "What is your zip code?"
 		zip_input = gets.strip
+		  if !/\A\d+\z/.match(zip_input) || zip_input.size > 5
+		   call
+		  end
 		list_pets(pet_input, zip_input)
 		menu
 		farewell
+	end
+
+	def valid_pet_input?(pet_input)
+		pet_input == "cat" || pet_input == "dog"
 	end
 
 	def list_pets(pet_input, zip_input)
