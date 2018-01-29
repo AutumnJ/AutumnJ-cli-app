@@ -25,11 +25,16 @@ class PetsSeekingPeople::Scraper
   end
 
 end 
+#doc.xpath("//*[@id='rgtkSearchResultsTable_0']/tbody/tr[1]/td[1]") => container (use counter to increment)
+#doc.xpath("//*[@id='rgtkSearchResultsTable_0']/tbody/tr[3]/td[1]") => animal 1 in row 2
+#three columns across; placeholder row in between each row
+#doc.xpath("//*[@id='rgtkSearchPetName_1_0']/a") => NEED INFO FROM ONCLICK
+#doc.xpath("//*[@id='rgtkSearchPetName_1_0']/a").text => animal name
+#doc.xpath("//*[@id='rgtkSearchPetBreed_1_0']").text => animal breed
+#doc.xpath("//*[@id='rgtkSearchPetBasicInfo_1_0']").text => animal age & gender
+#doc.xpath("//*[@id='rgtkSearchPetBasicInfo_1_0']").text.split(" ")[0] => animal age
+#doc.xpath("//*[@id='rgtkSearchPetBasicInfo_1_0']").text.split(" ")[1] => animal gender
 
-
-#//*[@id="rgtkSearchPetName_1_0"]
-
-#//*[@id="rgtkSearchContainer_0"]
 
 
 	#   pet_1 = self.new
