@@ -26,14 +26,11 @@ class PetsSeekingPeople::CLI
 			puts "Or type 'exit' to exit."
 			input = gets.strip.downcase
 			if input.to_i > 0 #strings converted to i convert to 0
-
-			case input
-		  	when "1"
-		  		"Here's their info..."
-					#display info on selected animal based on number
-				when "list"
-					#@@pets
-					#display list of animals
+				puts @pets[input.to_i-1]
+			elsif input == "list"
+				@pets
+			else
+				puts "Not sure what you want? Type 'list' to see available animals and then adopt them all!"
 			end
 		end
 	end
