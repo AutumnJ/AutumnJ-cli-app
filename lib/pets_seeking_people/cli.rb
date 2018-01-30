@@ -61,7 +61,9 @@ class PetsSeekingPeople::CLI
 	end
 
 	def list_pets
-  	  puts "These pets are available for adoption in your area:"
+			puts ""
+  	  puts "-------These pets are available for adoption in your area:-------"
+  	  puts ""
   	  PetsSeekingPeople::Pets.all.each.with_index(1) do |pet, i|
   		  puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age} - #{pet.gender}"
 		end
@@ -70,38 +72,51 @@ class PetsSeekingPeople::CLI
 	def list_details(pet_number)
 		add_info_about_pet(pet_number)
 		pet = PetsSeekingPeople::Pets.all[pet_number]
-		puts "Here's info on #{pet.name}:"
+		puts ""
+		puts "-------------------Here's info on #{pet.name}:-------------------"
+		puts ""
 		puts "Some deets you should know: #{pet.info}"
-		puts "----------------------------------------------------------------"
+		puts ""
+		puts "------------------------------------------------------------------"
+		puts ""
 		puts "If you want to adopt #{pet.name}, contact: #{pet.adoption_contact}"
-		puts "----------------------------------------------------------------"
+		puts ""
+		puts "------------------------------------------------------------------"
+		puts ""
 		#if pet.adoption_website != "" || pet.adoption_website != " " || pet.adoption_website != nil || pet.adoption_website != "http://"
 		puts "For more details on #{pet.name}, go to: #{pet.adoption_website}"
 	end
 
 	def menu
 		input = nil
-		while input != 'exit'
+		if input == "exit"
+			farewell
+		else 
+			while input != 'exit'
+			puts ""
+			puts "-------------------------------Menu-------------------------------"
 			puts "Enter the number of the pet you'd like more info."
 			puts "Or type 'list' to see the list of available pets again."
 			puts "Or type 'exit' to exit."
+			puts "------------------------------------------------------------------"
+			puts ""
 			input = gets.strip.downcase
 
-			if input.to_i > 0 && input.to_i <= 24 #strings converted to i convert to 0
-				pet_number = input.to_i-1
-				list_details(pet_number)
-			elsif input == "list"
-				list_pets
-			else
-				puts "Not sure what you want? Type 'list' to see available animals and then adopt them all!"
+				if input.to_i > 0 && input.to_i <= 24 #strings converted to i convert to 0
+					pet_number = input.to_i-1
+					list_details(pet_number)
+				elsif input == "list"
+					list_pets
+				end
 			end
-
 		end
 	end
 
 	def farewell
+		puts ""
 		puts "Thanks for considering giving a lovely pet a home! Visit again soon."
 		puts " ▼・ᴥ・▼ "
+		puts ""
 	end
 
 end
