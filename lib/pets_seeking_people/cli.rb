@@ -1,18 +1,23 @@
+# This is the toolkit key for cats as of 1/30/18. It may change. toolkitKey=6REv6Spa
+# This is the toolkit key for dogs as of 1/30/18. It may change. toolkitKey=zu8atrEs
+
 class PetsSeekingPeople::CLI
 
 	attr_accessor :pet_input, :zip_input
-
-	#@@pets = []
 
   def call
   	puts "Welcome to pets seeking people!"
   	pet_type
   	zip
   	find_available_pets
-  	add_info_about_pets
-		list_pets
-		menu
-		farewell
+	    if PetsSeekingPeople::Pets.all == []
+			  puts "Sad day for you - there are no pets in your area up for adoption. You adopted them all!"
+			  farewell
+			else
+				list_pets
+				menu
+				farewell
+			end
 	end
 
 	def pet_type
@@ -42,24 +47,35 @@ class PetsSeekingPeople::CLI
 	end
 
 	def find_available_pets
-		animals_array = Scraper.scrape_index_page("./assets/dogs.html")
-		#animals_array = Scraper.scrape_index_page("https://www.aspca.org/adopt-pet/adoptable-#{pet_type+"s"}-your-local-shelter#petfocus_0=&page_0=1&breed_0=&sex_0=&distance_0=25&location_0=#{zip_input}&action_0=search")
-		Pets.create_from_collection(animals_array)
+		pet_input == "cat" ? pet_type_input = "6REv6Spa" : pet_type_input = "zu8atrEs"
+		animals_array = PetsSeekingPeople::Scraper.scrape_index_page("https://toolkit.rescuegroups.org/j/3/grid1_layout.php?&location_0=#{zip_input}&toolkitIndex=0&toolkitKey=#{pet_type_input}", pet_type_input)
+		PetsSeekingPeople::Pets.create_from_collection(animals_array)
 	end
 
-	def add_info_about_pets
-		Pets.all.each do |pet|
-			info = Scraper.scrape_animal_page(animal.animal_url)
-			pet.add_animal_attributes(info)
-		end
+	def add_info_about_pet(pet_number)
+		  search_pet = PetsSeekingPeople::Pets.all[pet_number]
+		  if !PetsSeekingPeople::Pets.all[pet_number].info 
+				info = PetsSeekingPeople::Scraper.scrape_animal_page(search_pet.animal_url)
+				search_pet.add_animal_attributes(info)
+			end
 	end
 
 	def list_pets
-  	puts "These pets are available for adoption in your area"
-  	Pets.all.each.with_index(1) do |pet, i|
-  		puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age} - #{pet.gender}"}
+  	  puts "These pets are available for adoption in your area:"
+  	  PetsSeekingPeople::Pets.all.each.with_index(1) do |pet, i|
+  		  puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age} - #{pet.gender}"
 		end
 	end
+
+	def list_details(pet_number)
+		add_info_about_pet(pet_number)
+		pet = PetsSeekingPeople::Pets.all[pet_number]
+		puts "Here's info on #{pet.name}:"
+		puts "Some deets you should know: #{pet.info}"
+		puts "If you want to adopt #{pet.name}, contact: #{pet.adoption_contact}"
+		puts "For more details on #{pet.name}, go to: #{pet.adoption_website}"
+	end
+
 
 	def menu
 		input = nil
@@ -69,10 +85,11 @@ class PetsSeekingPeople::CLI
 			puts "Or type 'exit' to exit."
 			input = gets.strip.downcase
 
-			if input.to_i > 0 #strings converted to i convert to 0
-				puts @pets[input.to_i-1]
+			if input.to_i > 0 && input.to_i <= 24 #strings converted to i convert to 0
+				pet_number = input.to_i-1
+				list_details(pet_number)
 			elsif input == "list"
-				@pets.each.with_index(1) { |pet, i| puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age}"}
+				list_pets
 			else
 				puts "Not sure what you want? Type 'list' to see available animals and then adopt them all!"
 			end
@@ -83,7 +100,6 @@ class PetsSeekingPeople::CLI
 	def farewell
 		puts "Thanks for considering giving a lovely pet a home! Visit again soon."
 		puts " ▼・ᴥ・▼ "
-
 	end
 
 end
