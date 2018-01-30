@@ -66,7 +66,7 @@ class PetsSeekingPeople::CLI
 
 	def list_pets
 			puts ""
-  	  puts "-------These pets are available for adoption in your area:-------"
+  	  puts "---------- These pets are available for adoption in your area: ----------"
   	  puts ""
   	  PetsSeekingPeople::Pets.all.each.with_index(1) do |pet, i|
   		  puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age} - #{pet.gender}"
@@ -77,15 +77,16 @@ class PetsSeekingPeople::CLI
 		add_info_about_pet(pet_number)
 		pet = PetsSeekingPeople::Pets.all[pet_number]
 		puts ""
-		puts "-------------------Here's info on #{pet.name}:-------------------"
+		puts "-------------------  Here's info on #{pet.name}:  ---------------------"
 		puts ""
-		puts "Some deets you should know: #{pet.info}"
+		puts "Some deets you should know:"
+		pet.info.each {|pet_fact| puts "#{pet_fact}"}
 		puts ""
-		puts "------------------------------------------------------------------"
+		puts "--------------------------------------------------------------------------"
 		puts ""
 		puts "If you want to adopt #{pet.name}, contact: #{pet.adoption_contact}"
 		puts ""
-		puts "------------------------------------------------------------------"
+		puts "--------------------------------------------------------------------------"
 		puts ""
 		puts "For more details on #{pet.name}, go to: #{pet.adoption_website}"
 	end
@@ -97,11 +98,11 @@ class PetsSeekingPeople::CLI
 		else 
 			while input != 'exit'
 			puts ""
-			puts "-------------------------------Menu-------------------------------"
+			puts "---------------------------------- Menu ----------------------------------"
 			puts "Enter the number of the pet you'd like more info."
 			puts "Or type 'list' to see the list of available pets again."
 			puts "Or type 'exit' to exit."
-			puts "------------------------------------------------------------------"
+			puts "--------------------------------------------------------------------------"
 			puts ""
 			input = gets.strip.downcase
 
