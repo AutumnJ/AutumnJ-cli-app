@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pets_seeking_people (0.1.0)
+    pets_seeking_people (0.1.1)
       nokogiri
 
 GEM
