@@ -6,7 +6,7 @@ class PetsSeekingPeople::CLI
 
 	attr_accessor :pet_input, :zip_input
 
-  def call
+  def self.call
   	puts "Welcome to pets seeking people!"
   	pet_type
   	zip
