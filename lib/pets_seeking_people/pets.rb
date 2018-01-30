@@ -11,11 +11,11 @@ class PetsSeekingPeople::Pets
 
 	def self.create_from_collection(animals_array)
 		animals_array.each do |animal|
-			Pets.new(animal)
+			PetsSeekingPeople::Pets.new(animal)
 		end
 	end
 
-	def add_animal_attributes(attrbutes_hash)
+	def add_animal_attributes(attributes_hash)
 		attributes_hash.each {|key, value| self.send(("#{key}="), value)}
 		self
 	end
@@ -23,7 +23,6 @@ class PetsSeekingPeople::Pets
 	def self.all
 		@@all
 	end
-
 
 end
 
