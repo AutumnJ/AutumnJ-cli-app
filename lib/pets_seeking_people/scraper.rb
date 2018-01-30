@@ -3,21 +3,26 @@ class PetsSeekingPeople::Scraper
   def self.scrape_index_page #(index_url)
   	#practice w/dog and cat html files and remove those before publishing
   	doc = Nokogiri::HTML(File.read("./assets/cats.html"))
-  	binding.pry
     animals = [] # returns an array of hashes
   	#data on webpage is contained in table, so used xpath to access
     animal_number = 1
   	while animal_number <= 24
-    	animals << {
-    		:name => doc.xpath("//*[@id='rgtkSearchPetName_#{animal_number}_0']/a").text,
-    		:breed => doc.xpath("//*[@id='rgtkSearchPetBreed_#{animal_number}_0']").text,
-    		:age => doc.xpath("//*[@id='rgtkSearchPetBasicInfo_#{animal_number}_0']").text.split(" ")[0],
-    		:gender => doc.xpath("//*[@id='rgtkSearchPetBasicInfo_#{animal_number}_0']").text.split(" ")[1]
-    		#:animal_url	=> 
-    	}
-    	animal_number += 1
+  		if doc.xpath("//*[@id='rgtkSearchPetName_#{animal_number}_0']/a").text
+  			return animals
+  		else 
+  			animal_ID = doc.xpath("//*[@id='rgtkSearchPetName_#{animal_number}_0']/a/@onclick").text.split(",")[1]
+	    	animals << {
+	    		:name => doc.xpath("//*[@id='rgtkSearchPetName_#{animal_number}_0']/a").text,
+	    		:breed => doc.xpath("//*[@id='rgtkSearchPetBreed_#{animal_number}_0']").text,
+	    		:age => doc.xpath("//*[@id='rgtkSearchPetBasicInfo_#{animal_number}_0']").text.split(" ")[0],
+	    		:gender => doc.xpath("//*[@id='rgtkSearchPetBasicInfo_#{animal_number}_0']").text.split(" ")[1]
+	    		:animal_url	=> "https://www.aspca.org/adopt-pet/adoptable-cats-your-local-shelter#action_0=pet&animalID_0=#{animal_ID.strip}&petIndex_0=8"
+	    	}
+	    	animal_number += 1
+    	end
     end
   	animals 
+  	binding.pry
   end
 
   def self.scrape_animal_page #(animal_url)
@@ -42,6 +47,7 @@ end
 #three columns across; placeholder row in between each row
 #doc.xpath("//*[@id='rgtkSearchPetName_1_0']/a") => NEED INFO FROM ONCLICK
 #doc.xpath("//*[@id='rgtkSearchPetName_10_0']/a/@onclick") = gets onclick
+# doc.xpath("//*[@id='rgtkSearchPetName_10_0']/a/@onclick").text.split(",")[1] => gets URL input
 #doc.xpath("//*[@id='rgtkSearchPetName_1_0']/a").text => animal name
 #doc.xpath("//*[@id='rgtkSearchPetBreed_1_0']").text => animal breed
 #doc.xpath("//*[@id='rgtkSearchPetBasicInfo_1_0']").text => animal age & gender
