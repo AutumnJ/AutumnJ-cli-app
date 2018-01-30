@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Autumn J"]
   spec.email         = ["autumnkangas@gmail.com"]
 
-  spec.summary       = %q{An awesome gem that helps users locate cats and dogs available for adoption in their area.}
+  spec.summary       = %q{An awesome scraper gem that helps users locate cats and dogs available for adoption in their area.}
   spec.homepage      = "https://github.com/AutumnJ/AutumnJ-cli-app"
   spec.license       = "MIT"
 
