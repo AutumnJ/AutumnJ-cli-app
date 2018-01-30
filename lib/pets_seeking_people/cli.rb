@@ -8,7 +8,9 @@ class PetsSeekingPeople::CLI
   	puts "Welcome to pets seeking people!"
   	pet_type
   	zip
-		list_pets(pet_input, zip_input)
+  	find_available_pets
+  	add_info_about_pets
+		list_pets
 		menu
 		farewell
 	end
@@ -39,15 +41,24 @@ class PetsSeekingPeople::CLI
     /\A\d+\z/.match(zip_input) && zip_input.size == 5
 	end
 
-	def list_pets(pet_input, zip_input)
-		#runs scraper w/ different URL depending on pet_input
-		# pet_input == "cat" ? url = CATURL : url = DOGURL
-		#interpolate URL
-		#dog w/ zip: https://www.aspca.org/adopt-pet/adoptable-dogs-your-local-shelter#petfocus_0=&page_0=1&breed_0=&sex_0=&distance_0=25&location_0=60618&action_0=search
-		#cat w/ zip: https://www.aspca.org/adopt-pet/adoptable-cats-your-local-shelter#petfocus_0=&page_0=1&breed_0=&sex_0=&distance_0=25&location_0=60618&action_0=search
+	def find_available_pets
+		animals_array = Scraper.scrape_index_page("./assets/dogs.html")
+		#animals_array = Scraper.scrape_index_page("https://www.aspca.org/adopt-pet/adoptable-#{pet_type+"s"}-your-local-shelter#petfocus_0=&page_0=1&breed_0=&sex_0=&distance_0=25&location_0=#{zip_input}&action_0=search")
+		Pets.create_from_collection(animals_array)
+	end
+
+	def add_info_about_pets
+		Pets.all.each do |pet|
+			info = Scraper.scrape_animal_page(animal.animal_url)
+			pet.add_animal_attributes(info)
+		end
+	end
+
+	def list_pets
   	puts "These pets are available for adoption in your area"
-  	@pets = PetsSeekingPeople::Pets.available
-  	@pets.each.with_index(1) { |pet, i| puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age}"}
+  	Pets.all.each.with_index(1) do |pet, i|
+  		puts "#{i}. #{pet.name} - #{pet.breed} - #{pet.age} - #{pet.gender}"}
+		end
 	end
 
 	def menu
