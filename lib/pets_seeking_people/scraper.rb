@@ -52,7 +52,7 @@ class PetsSeekingPeople::Scraper
 
     animal[:info] = about_animal_array
     #animal[:detailed_info] = detailed_info
-    animal[:adoption_contact] = adoption_contact.join("; ")
+    animal[:adoption_contact] = adoption_contact
     animal[:adoption_website] = profile_doc.xpath("//*[@id='rgtkPetFieldOrgUrl_0']/a").text #org website
     animal
   end
