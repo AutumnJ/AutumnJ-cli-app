@@ -72,10 +72,12 @@ class PetsSeekingPeople::CLI
 		pet = PetsSeekingPeople::Pets.all[pet_number]
 		puts "Here's info on #{pet.name}:"
 		puts "Some deets you should know: #{pet.info}"
+		puts "----------------------------------------------------------------"
 		puts "If you want to adopt #{pet.name}, contact: #{pet.adoption_contact}"
+		puts "----------------------------------------------------------------"
+		#if pet.adoption_website != "" || pet.adoption_website != " " || pet.adoption_website != nil || pet.adoption_website != "http://"
 		puts "For more details on #{pet.name}, go to: #{pet.adoption_website}"
 	end
-
 
 	def menu
 		input = nil
