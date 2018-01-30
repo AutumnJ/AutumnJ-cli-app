@@ -28,15 +28,9 @@ When prompted, enter:
 1) The type of pet you're searching for (dog or cat -- the adoption of other pets is always supported, just not by this gem)
 2) Your zip code 
 
-After some computer magic occurs, view 24 pets available for adoption in the given zip code! Follow the menu prompts to learn more about each pet, and obtain contact info for the organization you can connect with to adopt them!
+After some computer magic occurs, view 24 pets available for adoption in the given zip code! Follow the menu prompts to learn more about each pet, and obtain contact info for the organization you can connect with to adopt them.
 
 Adopt away!
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
