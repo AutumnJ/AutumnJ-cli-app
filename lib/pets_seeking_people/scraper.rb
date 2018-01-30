@@ -43,15 +43,21 @@ class PetsSeekingPeople::Scraper
 			about_animal_array << li.text
 		end
 
+		detailed_info = []
+		profile_doc.xpath("//*[@id='rgtkPetFieldDescription_0']/div[1]/p"). each do |paragraph|
+			detailed_info << paragraph.text
+		end
+
 		adoption_contact =[]
 		adoption_contact << "Organization name: #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgName_0']").text}" #org name
-  	adoption_contact << profile_doc.xpath("//*[@id='rgtkPetFieldOrgAddress_0']").text #org address 1
-  	adoption_contact << profile_doc.xpath("//*[@id='rgtkPetFieldOrgCitystatezip_0']").text #org address 2
-  	adoption_contact << profile_doc.xpath("//*[@id='rgtkPetFieldOrgPhone_0']").text  #org phone
-  	#profile_doc.xpath("//*[@id='rgtkPetFieldOrgUrl_0']/a").text => org website
-  	#profile_doc.xpath("//*[@id='rgtkPetFieldDescription_0']/div[1]/p").text => more about animal, but not formatted well
+  	adoption_contact << "Address: #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgAddress_0']").text}, #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgCitystatezip_0']").text}" #org address
+  	adoption_contact << "Phone: #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgPhone_0']").text}" #org phone
+  	
+  	
     animal[:info] = about_animal_array
+    animal[:detailed_info] = detailed_info.join("\n")
     animal[:adoption_contact] = adoption_contact.join("; ")
+    animal[:adoption_website] = profile_doc.xpath("//*[@id='rgtkPetFieldOrgUrl_0']/a").text #org website
     animal
     binding.pry
   end
