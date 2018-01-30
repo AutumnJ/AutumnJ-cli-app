@@ -1,26 +1,27 @@
 class PetsSeekingPeople::Pets
 
-	attr_accessor :name, :breed, :age, :gender, :organization_url
+	attr_accessor :name, :breed, :age, :gender, :animal_url, :info, :detailed_info, :adoption_contact, :adoption_website
 
-	def self.available
-		#Scrape website and create new available pets based on data
+	@@all = []
 
-  	pet_1 = self.new
-  	pet_1.name = "Charlie"
-  	pet_1.breed = "Domestic Short-hair"
-  	pet_1.age = "Young"
-  	pet_1.gender = "Male"
-  	pet_1.organization_url = "http://www.starfishanimalrescue.com/"
+	def initialize(animal_hash)
+		animal_hash.each {|key, value| self.send(("#{key}="), value)}
+		@@all << self
+	end
 
-  	pet_2 = self.new
-  	pet_2.name = "Rex"
-  	pet_2.breed = "Yorkshire Terrier Mix"
-  	pet_2.age = "Adult"
-  	pet_2.gender = "Male"
-  	pet_2.organization_url = "http://www.romprescue.com/"
+	def self.create_from_collection(animals_array)
+		animals_array.each do |animal|
+			Pets.new(animal)
+		end
+	end
 
-  	[pet_1, pet_2]
+	def add_animal_attributes(attrbutes_hash)
+		attributes_hash.each {|key, value| self.send(("#{key}="), value)}
+		self
+	end
 
+	def self.all
+		@@all
 	end
 
 
