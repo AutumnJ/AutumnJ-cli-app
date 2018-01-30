@@ -1,8 +1,8 @@
 class PetsSeekingPeople::Scraper
 
-  def self.scrape_index_page #(index_url)
+  def self.scrape_index_page(index_url, pet_type_input)
   	#practice w/dog and cat html files and remove those before publishing
-  	doc = Nokogiri::HTML(File.read("./assets/cats.html"))
+  	doc = Nokogiri::HTML(open(index_url))
     animals = []
 
   	doc.xpath("//td[@class='rgtkSearchResultsCell']").each do |animal|
@@ -12,7 +12,7 @@ class PetsSeekingPeople::Scraper
 	      		:breed => animal.xpath(".//div[@class='rgtkSearchPetBreed']").text,
 	      		:age => animal.xpath(".//div[@class='rgtkSearchPetBasicInfo']").text.split(" ")[0],
 	      		:gender => animal.xpath(".//div[@class='rgtkSearchPetBasicInfo']").text.split(" ")[1],
-	      		:animal_url	=> "https://www.aspca.org/adopt-pet/adoptable-cats-your-local-shelter#action_0=pet&animalID_0=#{animal_ID.strip}&petIndex_0=8"
+	      		:animal_url	=> "https://toolkit.rescuegroups.org/j/3/pet1_layout.php?toolkitIndex=0&toolkitKey=#{pet_type_input}&animalID=#{animal_ID.strip}"
   		}
   	end
   	animals
@@ -34,9 +34,9 @@ class PetsSeekingPeople::Scraper
 	  #   	}
 	  #   	animal_number += 1
 
-  def self.scrape_animal_page #(animal_url)
+  def self.scrape_animal_page(animal_url)
   	#update so this scrapes webpage 
-  	profile_doc = Nokogiri::HTML(File.read("./assets/cat_instance.html"))
+  	profile_doc = Nokogiri::HTML(open(animal_url))
   	animal = {}
 		
 		about_animal_array = []
@@ -57,7 +57,7 @@ class PetsSeekingPeople::Scraper
   	
   	
     animal[:info] = about_animal_array
-    animal[:detailed_info] = detailed_info
+    #animal[:detailed_info] = detailed_info => This is a lot of paragraphs for the terminal
     animal[:adoption_contact] = adoption_contact.join("; ")
     animal[:adoption_website] = profile_doc.xpath("//*[@id='rgtkPetFieldOrgUrl_0']/a").text #org website
     animal
