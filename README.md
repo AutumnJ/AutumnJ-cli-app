@@ -1,8 +1,6 @@
 # PetsSeekingPeople
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pets_seeking_people`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+## A CLI Gem to Locate Adoptable Dogs & Cats in Your Area! 
 
 ## Installation
 
@@ -22,7 +20,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Once installed, execute:
+
+    $ pets_seeking_people
+
+When prompted, enter:
+1) The type of pet you're searching for (dog or cat -- the adoption of other pets is always supported, just not by this gem)
+2) Your zip code 
+
+After some computer magic occurs, view 24 pets available for adoption in the given zip code! Follow the menu prompts to learn more about each pet, and obtain contact info for the organization you can connect with to adopt them!
+
+Adopt away!
 
 ## Development
 
@@ -32,7 +40,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pets_seeking_people. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/AutumnJ/pets_seeking_people. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
