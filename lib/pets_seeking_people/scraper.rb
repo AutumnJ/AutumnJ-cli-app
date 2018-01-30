@@ -1,7 +1,6 @@
 class PetsSeekingPeople::Scraper
 
   def self.scrape_index_page(index_url, pet_type_input)
-  	#practice w/dog and cat html files and remove those before publishing
   	doc = Nokogiri::HTML(open(index_url))
     animals = []
 
@@ -35,7 +34,6 @@ class PetsSeekingPeople::Scraper
 	  #   	animal_number += 1
 
   def self.scrape_animal_page(animal_url)
-  	#update so this scrapes webpage 
   	profile_doc = Nokogiri::HTML(open(animal_url))
   	animal = {}
 		
@@ -44,20 +42,32 @@ class PetsSeekingPeople::Scraper
 			about_animal_array << li.text
 		end
 
-		detailed_info = []
-		profile_doc.xpath("//*[@id='rgtkPetFieldDescription_0']/div[1]/p"). each do |paragraph|
-			detailed_info << paragraph.text
-		end
-		detailed_info.delete_if {|paragraph| paragraph == " "}
+		# ------Aesthetically, this is a lot of info to display in the terminal-----
+		# detailed_info = []
+		# profile_doc.xpath("//*[@id='rgtkPetFieldDescription_0']/div[1]/p"). each do |paragraph|
+		# 	detailed_info << paragraph.text
+		# end
+		# detailed_info.delete_if {|paragraph| paragraph == " "}
 
 		adoption_contact =[]
 		adoption_contact << "Organization name: #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgName_0']").text}" #org name
-  	adoption_contact << "Address: #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgAddress_0']").text}, #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgCitystatezip_0']").text}" #org address
-  	adoption_contact << "Phone: #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgPhone_0']").text}" #org phone
   	
-  	
+	  adoption_address = []
+  	if profile_doc.xpath("//*[@id='rgtkPetFieldOrgAddress_0']").text.size > 3
+  	  adoption_address << "Address: #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgAddress_0']").text}"
+  	end
+  	if profile_doc.xpath("//*[@id='rgtkPetFieldOrgCitystatezip_0']").text.size > 3
+  		adoption_address << "#{profile_doc.xpath("//*[@id='rgtkPetFieldOrgCitystatezip_0']").text}" #org address
+  	end
+  	adoption_contact << adoption_address.join(", ")
+
+
+  	if profile_doc.xpath("//*[@id='rgtkPetFieldOrgPhone_0']").text.size > 3
+  	  adoption_contact << "Phone: #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgPhone_0']").text}" #org phone
+  	end
+
     animal[:info] = about_animal_array
-    #animal[:detailed_info] = detailed_info => This is a lot of paragraphs for the terminal
+    #animal[:detailed_info] = detailed_info
     animal[:adoption_contact] = adoption_contact.join("; ")
     animal[:adoption_website] = profile_doc.xpath("//*[@id='rgtkPetFieldOrgUrl_0']/a").text #org website
     animal
