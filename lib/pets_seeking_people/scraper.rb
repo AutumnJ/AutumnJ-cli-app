@@ -3,8 +3,7 @@ class PetsSeekingPeople::Scraper
   def self.scrape_index_page #(index_url)
   	#practice w/dog and cat html files and remove those before publishing
   	doc = Nokogiri::HTML(File.read("./assets/cats.html"))
-    animals = [] # returns an array of hashes
-  	#use xpath to access data contained in table
+    animals = []
 
   	doc.xpath("//td[@class='rgtkSearchResultsCell']").each do |animal|
   		animal_ID = animal.xpath(".//div[@class='rgtkSearchPetName']/a/@onclick").text.split(",")[1]
@@ -17,7 +16,6 @@ class PetsSeekingPeople::Scraper
   		}
   	end
   	animals
-  	binding.pry
   end
 
   	# could also access in a more unclear way...
@@ -38,17 +36,24 @@ class PetsSeekingPeople::Scraper
 
   def self.scrape_animal_page #(animal_url)
   	profile_doc = Nokogiri::HTML(File.read("./assets/cat_instance.html"))
+  	animal = {}
+		
+		about_animal_array = []
+		profile_doc.xpath("//*[@id='rgtkPetInfoIndented_0']/li").each do |li|
+			about_animal_array << li.text
+		end
 
-
-  	#profile_doc.xpath("//*[@id='rgtkPetInfoIndented_0']/li").text => more about animal, but not formatted well
-  	#profile_doc.xpath("//*[@id='rgtkPetFieldOrgName_0']").text => org name
-  	#profile_doc.xpath("//*[@id='rgtkPetFieldOrgAddress_0']").text => org address 1
-  	#profile_doc.xpath("//*[@id='rgtkPetFieldOrgCitystatezip_0']").text => org address 2
-  	#profile_doc.xpath("//*[@id='rgtkPetFieldOrgPhone_0']").text => org phone
+		adoption_contact =[]
+		adoption_contact << "Organization name: #{profile_doc.xpath("//*[@id='rgtkPetFieldOrgName_0']").text}" #org name
+  	adoption_contact << profile_doc.xpath("//*[@id='rgtkPetFieldOrgAddress_0']").text #org address 1
+  	adoption_contact << profile_doc.xpath("//*[@id='rgtkPetFieldOrgCitystatezip_0']").text #org address 2
+  	adoption_contact << profile_doc.xpath("//*[@id='rgtkPetFieldOrgPhone_0']").text  #org phone
   	#profile_doc.xpath("//*[@id='rgtkPetFieldOrgUrl_0']/a").text => org website
   	#profile_doc.xpath("//*[@id='rgtkPetFieldDescription_0']/div[1]/p").text => more about animal, but not formatted well
-  animal = {}
-
+    animal[:info] = about_animal_array
+    animal[:adoption_contact] = adoption_contact.join("; ")
+    animal
+    binding.pry
   end
 
 end 
