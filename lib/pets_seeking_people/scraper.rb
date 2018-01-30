@@ -17,22 +17,6 @@ class PetsSeekingPeople::Scraper
   	animals
   end
 
-  	# could also access each element directly, assuming 24 cells in table
-    #  animal_number = 1
-  	#  while animal_number <= 24
-  	#    if doc.xpath("//*[@id='rgtkSearchPetName_#{animal_number}_0']/a").text == nil
-  	# 		 return animals
-  	# 	 else 
-  	# 		 animal_ID = doc.xpath("//*[@id='rgtkSearchPetName_#{animal_number}_0']/a/@onclick").text.split(",")[1]
-	  #   	 animals << {
-	  #   		 :name => doc.xpath("//*[@id='rgtkSearchPetName_#{animal_number}_0']/a").text,
-	  #   		 :breed => doc.xpath("//*[@id='rgtkSearchPetBreed_#{animal_number}_0']").text,
-	  #   		 :age => doc.xpath("//*[@id='rgtkSearchPetBasicInfo_#{animal_number}_0']").text.split(" ")[0],
-	  #   		 :gender => doc.xpath("//*[@id='rgtkSearchPetBasicInfo_#{animal_number}_0']").text.split(" ")[1],
-	  #   		 :animal_url	=> "https://www.aspca.org/adopt-pet/adoptable-cats-your-local-shelter#action_0=pet&animalID_0=#{animal_ID.strip}&petIndex_0=8"
-	  #   	}
-	  #   	animal_number += 1
-
   def self.scrape_animal_page(animal_url)
   	profile_doc = Nokogiri::HTML(open(animal_url))
   	animal = {}
