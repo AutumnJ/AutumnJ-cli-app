@@ -84,7 +84,8 @@ class PetsSeekingPeople::CLI
 		puts ""
 		puts "--------------------------------------------------------------------------"
 		puts ""
-		puts "If you want to adopt #{pet.name}, contact: #{pet.adoption_contact}"
+		puts "If you want to adopt #{pet.name}, contact:"
+		pet.adoption_contact.each {|contact| puts "#{contact}"}
 		puts ""
 		puts "--------------------------------------------------------------------------"
 		puts ""
