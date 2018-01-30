@@ -12,6 +12,7 @@ class PetsSeekingPeople::CLI
   	zip
   	find_available_pets
 	    if PetsSeekingPeople::Pets.all == []
+	    	puts ""
 			  puts "Sad day for you - there are no pets in your area up for adoption. You adopted them all!"
 			  farewell
 			else
@@ -25,6 +26,7 @@ class PetsSeekingPeople::CLI
 		puts "If you're looking for a dog, type 'dog'. If you're looking for a cat, type 'cat'."
     @pet_input = gets.strip.downcase
 	    if !valid_pet_input?(pet_input)
+	    	puts ""
 	    	puts "While that's a lovely animal (or a typo), it's not an option."
 	  		self.pet_type
 	  	end
@@ -34,6 +36,7 @@ class PetsSeekingPeople::CLI
 		puts "What is your zip code?"
 		@zip_input = gets.strip
 		  if !valid_zip_code?(zip_input)
+		  	puts ""
 		  	puts "Oops, not a valid zip!"
 		    self.zip
 		  end
@@ -84,7 +87,6 @@ class PetsSeekingPeople::CLI
 		puts ""
 		puts "------------------------------------------------------------------"
 		puts ""
-		#if pet.adoption_website != "" || pet.adoption_website != " " || pet.adoption_website != nil || pet.adoption_website != "http://"
 		puts "For more details on #{pet.name}, go to: #{pet.adoption_website}"
 	end
 
@@ -103,7 +105,7 @@ class PetsSeekingPeople::CLI
 			puts ""
 			input = gets.strip.downcase
 
-				if input.to_i > 0 && input.to_i <= 24 #strings converted to i convert to 0
+				if input.to_i > 0 && input.to_i <= 24
 					pet_number = input.to_i-1
 					list_details(pet_number)
 				elsif input == "list"
