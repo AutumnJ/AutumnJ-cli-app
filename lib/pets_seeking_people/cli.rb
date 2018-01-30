@@ -1,5 +1,6 @@
 # This is the toolkit key for cats as of 1/30/18. It may change. toolkitKey=6REv6Spa
 # This is the toolkit key for dogs as of 1/30/18. It may change. toolkitKey=zu8atrEs
+# Adjust toolkit keys on line 50 as needed. 
 
 class PetsSeekingPeople::CLI
 
