@@ -1,6 +1,6 @@
 class PetsSeekingPeople::Pets
 
-	attr_accessor :name, :breed, :age, :gender, :animal_url, :info, :detailed_info, :adoption_contact, :adoption_website
+  attr_accessor :name, :breed, :age, :gender, :animal_url, :info, :detailed_info, :adoption_contact, :adoption_website
 
 	@@all = []
 

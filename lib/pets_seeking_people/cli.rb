@@ -4,7 +4,7 @@
 
 class PetsSeekingPeople::CLI
 
-	attr_accessor :pet_input, :zip_input
+  attr_accessor :pet_input, :zip_input
 
   def call
   	puts "Welcome to pets seeking people!"
@@ -107,7 +107,7 @@ class PetsSeekingPeople::CLI
 			puts ""
 			input = gets.strip.downcase
 
-				if input.to_i > 0 && input.to_i <= 24
+				if input.to_i > 0 && input.to_i <= PetsSeekingPeople::Pets.all.size
 					pet_number = input.to_i-1
 					list_details(pet_number)
 				elsif input == "list"

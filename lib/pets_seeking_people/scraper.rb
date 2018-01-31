@@ -56,5 +56,6 @@ class PetsSeekingPeople::Scraper
     animal[:adoption_website] = profile_doc.xpath("//*[@id='rgtkPetFieldOrgUrl_0']/a").text #org website
     animal
   end
+  
 end 
 
