@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby 
 
 require "bundler/setup"
-require "pets_seeking_people"
+require_relative "../lib/pets_seeking_people.rb"
 
 
 PetsSeekingPeople::CLI.new.call
