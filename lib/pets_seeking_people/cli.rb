@@ -1,7 +1,3 @@
-# This is the toolkit key for cats as of 1/30/18. It may change. toolkitKey=6REv6Spa
-# This is the toolkit key for dogs as of 1/30/18. It may change. toolkitKey=zu8atrEs
-# Adjust toolkit keys on line 50 as needed. 
-
 class PetsSeekingPeople::CLI
 
   attr_accessor :pet_input, :zip_input
@@ -51,16 +47,14 @@ class PetsSeekingPeople::CLI
 	end
 
 	def find_available_pets
-		pet_input == "cat" ? pet_type_input = "6REv6Spa" : pet_type_input = "zu8atrEs"
-		animals_array = PetsSeekingPeople::Scraper.scrape_index_page("https://toolkit.rescuegroups.org/j/3/grid1_layout.php?&location_0=#{zip_input}&toolkitIndex=0&toolkitKey=#{pet_type_input}", pet_type_input)
+		animals_array = PetsSeekingPeople::Scraper.scrape_index_page(zip_input, pet_input)
 		PetsSeekingPeople::Pets.create_from_collection(animals_array)
 	end
 
-	def add_info_about_pet(pet_number)
-		  search_pet = PetsSeekingPeople::Pets.all[pet_number]
-		  if !PetsSeekingPeople::Pets.all[pet_number].info 
-				info = PetsSeekingPeople::Scraper.scrape_animal_page(search_pet.animal_url)
-				search_pet.add_animal_attributes(info)
+	def add_info_about_pet(list_pet)
+		  if !list_pet.info 
+				info = PetsSeekingPeople::Scraper.scrape_animal_page(list_pet.animal_url)
+				list_pet.add_animal_attributes(info)
 			end
 	end
 
@@ -73,23 +67,22 @@ class PetsSeekingPeople::CLI
 		end
 	end
 
-	def list_details(pet_number)
-		add_info_about_pet(pet_number)
-		pet = PetsSeekingPeople::Pets.all[pet_number]
+	def list_details(list_pet)
+		add_info_about_pet(list_pet)
 		puts ""
-		puts "-------------------  Here's info on #{pet.name}:  ---------------------"
+		puts "-------------------  Here's info on #{list_pet.name}:  ---------------------"
 		puts ""
 		puts "Some deets you should know:"
-		pet.info.each {|pet_fact| puts "#{pet_fact}"}
+		list_pet.info.each {|pet_fact| puts "#{pet_fact}"}
 		puts ""
 		puts "--------------------------------------------------------------------------"
 		puts ""
-		puts "If you want to adopt #{pet.name}, contact:"
-		pet.adoption_contact.each {|contact| puts "#{contact}"}
+		puts "If you want to adopt #{list_pet.name}, contact:"
+		list_pet.adoption_contact.each {|contact| puts "#{contact}"}
 		puts ""
 		puts "--------------------------------------------------------------------------"
 		puts ""
-		puts "For more details on #{pet.name}, go to: #{pet.adoption_website}"
+		puts "For more details on #{list_pet.name}, go to: #{list_pet.adoption_website}"
 	end
 
 	def menu
@@ -108,8 +101,8 @@ class PetsSeekingPeople::CLI
 			input = gets.strip.downcase
 
 				if input.to_i > 0 && input.to_i <= PetsSeekingPeople::Pets.all.size
-					pet_number = input.to_i-1
-					list_details(pet_number)
+					list_pet = PetsSeekingPeople::Pets.find(input)
+					list_details(list_pet)
 				elsif input == "list"
 					list_pets
 				end
