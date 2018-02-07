@@ -24,5 +24,9 @@ class PetsSeekingPeople::Pets
 		@@all
 	end
 
+	def self.find(input)
+		self.all[input.to_i-1]
+	end
+
 end
 
