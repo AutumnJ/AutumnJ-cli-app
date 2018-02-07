@@ -1,6 +1,12 @@
+# This is the toolkit key for cats as of 1/30/18. It may change. toolkitKey=6REv6Spa
+# This is the toolkit key for dogs as of 1/30/18. It may change. toolkitKey=zu8atrEs
+# Adjust toolkit keys on line 8 as needed. 
+
 class PetsSeekingPeople::Scraper
 
-  def self.scrape_index_page(index_url, pet_type_input)
+  def self.scrape_index_page(zip_input, pet_input)
+    pet_input == "cat" ? pet_type_input = "6REv6Spa" : pet_type_input = "zu8atrEs"
+    index_url = "https://toolkit.rescuegroups.org/j/3/grid1_layout.php?&location_0=#{zip_input}&toolkitIndex=0&toolkitKey=#{pet_type_input}"
   	doc = Nokogiri::HTML(open(index_url))
     animals = []
 
@@ -56,6 +62,6 @@ class PetsSeekingPeople::Scraper
     animal[:adoption_website] = profile_doc.xpath("//*[@id='rgtkPetFieldOrgUrl_0']/a").text #org website
     animal
   end
-  
+
 end 
 
